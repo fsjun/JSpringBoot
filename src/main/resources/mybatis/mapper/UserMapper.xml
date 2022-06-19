@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo.dao.UserMapper">
+    <select id="queryAll" resultType="org.example.demo.pojo.User">
+        select * from sys_user_t
+    </select>
+    <select id="queryByName" resultType="org.example.demo.pojo.User">
+        select * from sys_user_t where name = #{name}
+    </select>
+    <insert id="add" parameterType="org.example.demo.pojo.User">
+        insert into sys_user_t(name,password,remark) values (#{name},#{password},#{remark})
+    </insert>
+</mapper>
