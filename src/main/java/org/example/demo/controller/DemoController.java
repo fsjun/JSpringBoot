@@ -64,6 +64,12 @@ public class DemoController {
 
     @GetMapping(value="/demo/userdb")
     public List<User> getUser() {
+        userService.delete(4);
         return userService.queryAll();
+    }
+
+    @GetMapping(value="/demo/one")
+    public User getUserOne(String name) {
+        return userService.queryByName(name);
     }
 }

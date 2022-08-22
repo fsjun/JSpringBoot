@@ -2,18 +2,23 @@ package org.example.security.realm;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.authc.BearerHttpAuthenticationFilter;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 public class JwtFilter extends BearerHttpAuthenticationFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest req = requestAttributes.getRequest();
+        String url = req.getServletPath();
         boolean res=super.onAccessDenied(request, response);//jwt的登录在这里面
-        log.info("onAccessDenied "+res);
+        log.info("url {} onAccessDenied {}", url, res);
         if (!res){
             throw new RuntimeException("token失效或异常，请重新登录");//jwt验证器的错误抛不上来，应该是shiro机制的不完善（）
         }

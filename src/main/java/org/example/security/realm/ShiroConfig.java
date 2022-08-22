@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.servlet.Filter;
 
@@ -32,9 +33,15 @@ public class ShiroConfig extends ShiroBeanAutoConfiguration {
         filterMap.put("jwt", new JwtFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
 //
-        Map<String, String> filterRuleMap = new HashMap<String, String>();
+        Map<String, String> filterRuleMap = new LinkedHashMap<String, String>();
 //        filterRuleMap.put("/index","anon");
+        filterRuleMap.put("/swagger-ui/**","anon");
+        filterRuleMap.put("/swagger-resources/**","anon");
+        filterRuleMap.put("/v3/api-docs/**", "anon");
         filterRuleMap.put("/login","anon");
+        filterRuleMap.put("/error","anon");
+        filterRuleMap.put("/favicon.ico", "anon");
+        filterRuleMap.put("/demo/**","anon");
 //        filterRuleMap.put("/**", "authcBearer");
         filterRuleMap.put("/**", "jwt");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterRuleMap);
