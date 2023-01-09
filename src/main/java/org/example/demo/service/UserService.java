@@ -3,6 +3,7 @@ package org.example.demo.service;
 import lombok.extern.slf4j.Slf4j;
 import org.example.demo.dao.UserRepository;
 import org.example.demo.pojo.User;
+import org.example.demo.vo.UserInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,11 @@ public class UserService {
     }
 
     public User queryByName(String name) {
-        return userRepository.queryByName(name);
+        UserInt user = userRepository.queryByName(name);
+        User u = new User();
+        u.setId(user.getId());
+        u.setName(user.getName());
+        return u;
     }
 
     public int add(User user) {
